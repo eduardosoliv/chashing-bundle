@@ -99,4 +99,4 @@ print_r($chash->lookup('test1')); // server3
 
 Some notes:
 * The weight is useful to handle servers with different capacity, eg: a server with 8GB of RAM can have a weight of 8, other with 2GB of RAM weight of 2;
-* Anothers hashing algorithms can be used than crc32, there is already an example of MD5;
+* Anothers hashing algorithms can be used than crc32, there is already an example of MD5.
