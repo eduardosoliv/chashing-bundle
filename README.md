@@ -6,9 +6,11 @@ What does this bundle do?
 
 Simple Symfony 2 bundle that implements consistent hashing, one of the most know use case is in distributed caching, but can be used in other cases like shard data across multiple serve.
 
-The base of this bundle is Flexihash code (https://github.com/pda/flexihash/)
+The base of this bundle is Flexihash code (https://github.com/pda/flexihash/).
 
 You can read more about consistent hashing in: http://www.tomkleinpeter.com/2008/03/17/programmers-toolbox-part-3-consistent-hashing/
+
+Forks and pull requests are welcome.
 
 Requirements
 ------------
@@ -49,4 +51,48 @@ Add to your AppKernel.php
 
 ```
 new ESO\CHashingBundle\ESOCHashingBundle()
+```
+
+How to use
+------------
+
+The easier way to use it, is to create an service:
+
+```yaml
+    eso.chashing:
+        class: ESO\CHashingBundle\Main\CHash
+        arguments: ["@eso.chashing.hasher"]
+
+    eso.chashing.hasher:
+        class: ESO\CHashingBundle\Hasher\Crc32
+```
+
+```php
+/* @var $chash \ESO\CHashingBundle\Main\CHash */
+$chash = $this->container->get('eso.chashing');
+
+// add one target
+$chash->targets()->add('server1', 5); // add target test with weight 10
+
+// add multiple targets
+$chash->targets()->addMulti(
+    array(
+        'server2' => 1,
+        'server3' => 2
+    )
+);
+
+// simple lookup
+print_r($chash->lookup('test1')); // server1
+
+// ask more than one target, useful for edundant writes
+print_r($chash->lookup('test1', 2)); // server1 and server3
+
+// another key
+print_r($chash->lookup('hash-other-key-2')); // server2
+
+// remove the server1
+$chash->targets()->del('server1');
+
+print_r($chash->lookup('test1')); // server3
 ```
