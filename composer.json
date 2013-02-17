@@ -1,0 +1,22 @@
+{
+    "name": "eso/chashing-bundle",
+    "type": "symfony-bundle",
+    "description": "Consistent hashing",
+    "keywords": ["consistent", "hashing"],
+    "homepage": "http://github.com/entering/chashing-bundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Eduardo Oliveira",
+            "email": "entering@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.2"
+    },
+    "autoload": {
+        "psr-0": { "ESO\\CHashing": "" }
+    },
+    "minimum-stability": "dev",
+    "target-dir": "eso/ESO/ChashingBundle"
+}
