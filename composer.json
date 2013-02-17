@@ -2,7 +2,7 @@
     "name": "eso/chashing-bundle",
     "type": "symfony-bundle",
     "description": "Consistent hashing",
-    "keywords": ["consistent", "hashing"],
+    "keywords": ["consistent", "hashing", "bundle", "symfony"],
     "homepage": "http://github.com/entering/chashing-bundle",
     "license": "MIT",
     "authors": [
