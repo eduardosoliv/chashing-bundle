@@ -72,7 +72,7 @@ The easier way to use it, is to create an service:
 $chash = $this->container->get('eso.chashing');
 
 // add one target
-$chash->targets()->add('server1', 5); // add target test with weight 10
+$chash->targets()->add('server1', 5); // add target test with weight 5
 
 // add multiple targets
 $chash->targets()->addMulti(
@@ -96,3 +96,7 @@ $chash->targets()->del('server1');
 
 print_r($chash->lookup('test1')); // server3
 ```
+
+Some notes:
+* The weight is useful to handle servers with different capacity, eg: a server with 8GB of RAM can have a weight of 8, other with 2GB of RAM weight of 2;
+* Anothers hashing algorithms can be used than crc32, there is already an example of MD5;
