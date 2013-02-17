@@ -8,18 +8,24 @@ What does this bundle do?
 
 Simple Symfony 2 bundle that implements consistent hashing, one of the most know use case is in distributed caching, but can be used in other cases like shard data across multiple databases/servers.
 
-The base of this bundle is Flexihash code (https://github.com/pda/flexihash/).
+The source code of this bundle is base Flexihash (https://github.com/pda/flexihash/).
 
 You can read more about consistent hashing in: http://www.tomkleinpeter.com/2008/03/17/programmers-toolbox-part-3-consistent-hashing/
 
 Pull requests are welcome (see Developing section).
 
-Improves
+Improves/changes
 ------------
 
 There are some improves/changes to Flexihash:
 * Used PHPunit instead of Simpletest;
-* Improved performance of lookup;
+* Added several validations on adding/removing targets;
+* Improved performance of lookup:
+  * Used isset instead of in_array (https://github.com/pda/flexihash/blob/master/classes/Flexihash.php#L190);
+  * Removed unecessary count's (https://github.com/pda/flexihash/blob/master/classes/Flexihash.php#L196);
+  * Simplified the if's inside foreach leading to huge performance improvements  (https://github.com/pda/flexihash/blob/master/classes/Flexihash.php#L181);
+* Break the main class in two, one main class and one holding data and methods related to tagerts;
+* 100% code coverage;
 
 Requirements
 ------------
@@ -124,4 +130,11 @@ Coding standards used: PSR-*
 
 And testing should aim 100%
 
+TODO
+------------
+
+* Add method to get all targets and weights (can be useful);
+* Add a way of configuring the targets of chashing through services of Symfony 2;
+* Improve documentation on PHPdocs;
+* Add proper documentation on Resources/doc.
 
