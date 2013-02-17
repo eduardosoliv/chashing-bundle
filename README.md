@@ -15,7 +15,7 @@ Pull requests are welcome.
 Requirements
 ------------
 
-* PHP 5.3.*
+* PHP >= 5.3.2
 * PHPUnit 3.7.* (just for development)
 
 Installation
