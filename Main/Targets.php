@@ -126,7 +126,7 @@ class Targets
             );
         }
         if ($this->has($name)) {
-            throw new \Exception("Target '$name' already present on mapping.");
+            throw new \RuntimeException("Target '$name' already present on mapping.");
         }
 
         // add target to map
@@ -181,7 +181,7 @@ class Targets
             throw new \InvalidArgumentException('Invalid target name.');
         }
         if (!$this->has($name)) {
-            throw new \Exception("Target '$name' not present on mapping.");
+            throw new \RuntimeException("Target '$name' not present on mapping.");
         }
 
         foreach ($this->targetsPositions[$name] as $position) {

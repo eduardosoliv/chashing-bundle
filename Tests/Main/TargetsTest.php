@@ -176,7 +176,7 @@ class TargetsTest extends \PHPUnit_Framework_TestCase
     /**
      * Test add duplicate target.
      *
-     * @expectedException \Exception
+     * @expectedException \RuntimeException
      * @expectedExceptionMessage already present on mapping
      */
     public function testAddDuplicateName()
@@ -329,7 +329,7 @@ class TargetsTest extends \PHPUnit_Framework_TestCase
     /**
      * Test del of absent target.
      *
-     * @expectedException \Exception
+     * @expectedException \RuntimeException
      * @expectedExceptionMessage not present on mapping
      */
     public function testDelAbsentTarget()
