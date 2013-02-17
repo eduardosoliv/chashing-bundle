@@ -10,7 +10,7 @@ The base of this bundle is Flexihash code (https://github.com/pda/flexihash/).
 
 You can read more about consistent hashing in: http://www.tomkleinpeter.com/2008/03/17/programmers-toolbox-part-3-consistent-hashing/
 
-Forks and pull requests are welcome.
+Pull requests are welcome.
 
 Requirements
 ------------
