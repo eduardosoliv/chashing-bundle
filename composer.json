@@ -15,8 +15,8 @@
         "php": ">=5.3.2"
     },
     "autoload": {
-        "psr-0": { "ESO\\CHashingBundle": "" }
+        "psr-0": { "ESO\\ChashingBundle": "" }
     },
     "minimum-stability": "dev",
-    "target-dir": "ESO/CHashingBundle"
+    "target-dir": "ESO/ChashingBundle"
 }
