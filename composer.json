@@ -18,5 +18,5 @@
         "psr-0": { "ESO\\CHashing": "" }
     },
     "minimum-stability": "dev",
-    "target-dir": "eso/ESO/ChashingBundle"
+    "target-dir": "ESO/ChashingBundle"
 }
