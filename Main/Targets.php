@@ -11,10 +11,12 @@
 
 namespace ESO\CHashingBundle\Main;
 
+use ESO\CHashingBundle\Hasher\HasherInterface;
+
 /**
  * Targets.
  *
- * @author  Eduardo Oliveira <entering@gmail.com>
+ * @author Eduardo Oliveira <entering@gmail.com>
  */
 class Targets
 {
@@ -78,16 +80,18 @@ class Targets
     /**
      * Constructor.
      *
-     * @param \ESO\CHashingBundle\ESO\CHashingBundle\Hasher\HasherInterface $hasher   Hasher algorithm.
-     * @param integer                                                       $replicas Number of positions   to hash each target to.
+     * @param HasherInterface $hasher   Hasher algorithm.
+     * @param integer         $replicas Number of positions to hash each target.
      *
      * @throws \InvalidArgumentException
      */
-    public function __construct(\ESO\CHashingBundle\Hasher\HasherInterface $hasher, $replicas = null)
+    public function __construct(HasherInterface $hasher, $replicas = null)
     {
         // validations
         if ($replicas !== null && (!is_int($replicas) || $replicas < 1)) {
-            throw new \InvalidArgumentException('Number of replicas needs to be a positive integer.');
+            throw new \InvalidArgumentException(
+                'Number of replicas needs to be a positive integer.'
+            );
         }
 
         // assign
@@ -117,7 +121,9 @@ class Targets
             throw new \InvalidArgumentException('Invalid target name.');
         }
         if (!$this->validateWeight($weight)) {
-            throw new \InvalidArgumentException('Weight needs to be a positive integer.');
+            throw new \InvalidArgumentException(
+                'Weight needs to be a positive integer.'
+            );
         }
         if ($this->has($name)) {
             throw new \Exception("Target '$name' already present on mapping.");
@@ -127,10 +133,13 @@ class Targets
         $this->targetsPositions[$name] = array();
 
         $max = $this->getNumberReplicas() * $weight;
-        for ($i = 0; $i < $max;  ++$i) {
-            $position = $this->getHasher()->hash($name . $i); // concatenate name of target with number
-            $this->positionsTargets[$position] = $name; // add target to array of positions
-            $this->targetsPositions[$name][] = $position; // add position to the target
+        for ($i = 0; $i < $max; ++$i) {
+            // concatenate name of target with number
+            $position = $this->getHasher()->hash($name . $i);
+            // add target to array of positions
+            $this->positionsTargets[$position] = $name;
+            // add position to the target
+            $this->targetsPositions[$name][] = $position;
         }
 
         // not sorted anymore

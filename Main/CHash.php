@@ -11,12 +11,13 @@
 
 namespace ESO\CHashingBundle\Main;
 
+use ESO\CHashingBundle\Hasher\HasherInterface;
 use ESO\CHashingBundle\Main\Targets;
 
 /**
  * CHasher.
  *
- * @author  Eduardo Oliveira <entering@gmail.com>
+ * @author Eduardo Oliveira <entering@gmail.com>
  */
 class CHash
 {
@@ -34,12 +35,12 @@ class CHash
     /**
      * Constructor.
      *
-     * @param \ESO\CHashingBundle\ESO\CHashingBundle\Hasher\HasherInterface $hasher   Hasher algorithm.
-     * @param integer                                                       $replicas Number of positions   to hash each target to.
+     * @param HasherInterface $hasher   Hasher algorithm.
+     * @param integer         $replicas Number of positions to hash each target.
      *
      * @throws \InvalidArgumentException
      */
-    public function __construct(\ESO\CHashingBundle\Hasher\HasherInterface $hasher, $replicas = null)
+    public function __construct(HasherInterface $hasher, $replicas = null)
     {
         $this->targets = new Targets($hasher, $replicas);
     }
@@ -85,14 +86,14 @@ class CHash
             }
 
             // avoid collection duplicates, using isset just due to performance
-            if ($collect && !isset($resTargets[$targetName]))
-            {
+            if ($collect && !isset($resTargets[$targetName])) {
                 // add target and increment counter
                 $resTargets[$targetName] = $targetName;
                 ++$resTargetsCount;
 
                 // break when enough results or list exhausted
-                if ($resTargetsCount == $targetsCount || $resTargetsCount == $this->targets()->getTargetsCount()) {
+                if ($resTargetsCount == $targetsCount ||
+                    $resTargetsCount == $this->targets()->getTargetsCount()) {
                     break;
                 }
             }
@@ -122,15 +123,21 @@ class CHash
     /**
      * Validate lookup.
      *
+     * @param string  $key          Key.
+     * @param integer $targetsCount Targets count.
+     *
      * @throws \InvalidArgumentException
      */
-    private function validateLookup($key, $targetsCount) {
+    private function validateLookup($key, $targetsCount)
+    {
         /// validations
         if (!$this->validateKey($key)) {
             throw new \InvalidArgumentException('Invalid key.');
         }
         if (!$this->validateTargetsCount($targetsCount)) {
-            throw new \InvalidArgumentException('Targets count needs to be a positive integer.');
+            throw new \InvalidArgumentException(
+                'Targets count needs to be a positive integer.'
+            );
         }
     }
 

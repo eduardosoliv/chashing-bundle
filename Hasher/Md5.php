@@ -16,7 +16,7 @@ use ESO\CHashingBundle\Hasher\HasherInterface;
 /**
  * Md5 hasher.
  *
- * @author  Eduardo Oliveira <entering@gmail.com>
+ * @author Eduardo Oliveira <entering@gmail.com>
  */
 class Md5 implements HasherInterface
 {
@@ -26,7 +26,9 @@ class Md5 implements HasherInterface
     public function hash($str)
     {
         if (!is_string($str)) {
-            throw new \InvalidArgumentException('Cannot hash input not string.');
+            throw new \InvalidArgumentException(
+                'Cannot hash input not string.'
+            );
         }
 
         return substr(md5($str), 0, 8);

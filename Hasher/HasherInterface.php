@@ -14,7 +14,7 @@ namespace ESO\CHashingBundle\Hasher;
 /**
  * Interface of hasher.
  *
- * @author  Eduardo Oliveira <entering@gmail.com>
+ * @author Eduardo Oliveira <entering@gmail.com>
  */
 interface HasherInterface
 {

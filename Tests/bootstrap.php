@@ -9,9 +9,12 @@
  * file that was distributed with this source code.
  */
 
+$errorDependencies =
+    'Install dependencies to run test suite. "php composer.phar install --dev"';
+
 $file = __DIR__.'/../vendor/autoload.php';
 if (!file_exists($file)) {
-    throw new RuntimeException('Install dependencies to run test suite. "php composer.phar install --dev"');
+    throw new RuntimeException($errorDependencies);
 }
 
 require_once $file;
