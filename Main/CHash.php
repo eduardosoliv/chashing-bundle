@@ -80,22 +80,22 @@ class CHash
 
         // search values above the key position
         foreach ($positionsTargets as $position => $targetName) {
-            // just start collecting after passing key position
-            if (!$collect && $position > $keyPosition) {
-                $collect = true;
-            }
+            if ($collect) {
+                // avoid collection duplicates, using isset just due to performance
+                if (!isset($resTargets[$targetName])) {
+                    // add target and increment counter
+                    $resTargets[$targetName] = $targetName;
+                    ++$resTargetsCount;
 
-            // avoid collection duplicates, using isset just due to performance
-            if ($collect && !isset($resTargets[$targetName])) {
-                // add target and increment counter
-                $resTargets[$targetName] = $targetName;
-                ++$resTargetsCount;
-
-                // break when enough results or list exhausted
-                if ($resTargetsCount == $targetsCount ||
-                    $resTargetsCount == $this->targets()->getTargetsCount()) {
-                    break;
+                    // break when enough results or list exhausted
+                    if ($resTargetsCount == $targetsCount ||
+                        $resTargetsCount == $this->targets()->getTargetsCount()) {
+                        break;
+                    }
                 }
+            } elseif ($position > $keyPosition) {
+                // just start collecting after passing key position
+                $collect = true;
             }
         }
 
