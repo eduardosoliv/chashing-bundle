@@ -18,6 +18,8 @@ use ESO\CHashingBundle\Hasher;
  * Targets tests.
  *
  * @author  Eduardo Oliveira <entering@gmail.com>
+ *
+ * @SuppressWarnings(PHPMD.TooManyMethods)
  */
 class TargetsTest extends \PHPUnit_Framework_TestCase
 {
@@ -37,9 +39,8 @@ class TargetsTest extends \PHPUnit_Framework_TestCase
      */
     protected function setUp()
     {
-        $this->targets = new Targets(new Hasher\Crc32());
+        $this->targets = new Targets(new Hasher\Crc32(), 30);
     }
-
 
     /**************************************************************************
      * Test constructor.
@@ -85,6 +86,28 @@ class TargetsTest extends \PHPUnit_Framework_TestCase
             new Hasher\Crc32(),
             10.5
         );
+    }
+
+    /**************************************************************************
+     * Test has.
+     *************************************************************************/
+
+    /**
+     * Test has.
+     */
+    public function testHas()
+    {
+        $this->assertFalse($this->targets->has('t'));
+    }
+
+    /**
+     * Test hash with name as array.
+     *
+     * @expectedException \InvalidArgumentException
+     */
+    public function testHasNameAsArray()
+    {
+        $this->targets->has(array('t'));
     }
 
     /**************************************************************************
@@ -163,7 +186,7 @@ class TargetsTest extends \PHPUnit_Framework_TestCase
     }
 
     /**************************************************************************
-     * Internal data structures.
+     * Test internal data structures when adding.
      *************************************************************************/
 
     /**
@@ -187,7 +210,7 @@ class TargetsTest extends \PHPUnit_Framework_TestCase
         $targetsPositions = $targetsPositionsProp->getValue($this->targets);
 
         // assert that the two targets are there
-        $this->assertCount(count($targets), $targetsPositions);
+        $this->assertEquals(count($targets), $this->targets->getTargetsCount());
 
         foreach ($targetsPositions as $name => $positions) {
             $this->assertTrue(isset($targets[$name]));
@@ -213,18 +236,12 @@ class TargetsTest extends \PHPUnit_Framework_TestCase
              $this->targets->add($name, $weight);
              $totalPositions += $this->targets->getNumberReplicas() * $weight;
         }
-
-        // get targetsPositions
-        $reflect = new \ReflectionClass($this->targets);
-        $positionsTargetsProp = $reflect->getProperty('positionsTargets');
-        $positionsTargetsProp->setAccessible(true);
-        $positionsTargets = $positionsTargetsProp->getValue($this->targets);
-
+        
         // assert that all the positions are there
-        $this->assertCount($totalPositions, $positionsTargets);
+        $this->assertCount($totalPositions, $this->targets->getPositionsTargets());
 
         // assert total of positions of each target
-        $targetsPositionsTotal = array_count_values($positionsTargets);
+        $targetsPositionsTotal = array_count_values($this->targets->getPositionsTargets());
         foreach ($targetsPositionsTotal as $name => $numberPositions) {
             $this->assertTrue(isset($targets[$name]));
             $this->assertEquals($targets[$name] * $this->targets->getNumberReplicas(), $numberPositions);
@@ -240,12 +257,10 @@ class TargetsTest extends \PHPUnit_Framework_TestCase
         $this->targets->add('test2');
 
         // test count
-        $reflect = new \ReflectionClass($this->targets);
-        $targetCountProp = $reflect->getProperty('targetCount');
-        $targetCountProp->setAccessible(true);
-        $this->assertEquals(2, $targetCountProp->getValue($this->targets));
+        $this->assertEquals(2, $this->targets->getTargetsCount());
 
         // test sorted
+        $reflect = new \ReflectionClass($this->targets);
         $positionsTargetsSortedProp = $reflect->getProperty('positionsTargetsSorted');
         $positionsTargetsSortedProp->setAccessible(true);
         $this->assertFalse($positionsTargetsSortedProp->getValue($this->targets));
@@ -275,4 +290,151 @@ class TargetsTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(count($targets), $targetCountProp->getValue($this->targets));
     }
 
+    /**************************************************************************
+     * Test delete target.
+     *************************************************************************/
+
+    /**
+     * Test del with name as array.
+     *
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Invalid target name
+     */
+    public function testDelNameAsArray()
+    {
+        $this->targets->del(array('ola'));
+    }
+
+    /**
+     * Test del with empty string.
+     *
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Invalid target name
+     */
+    public function testDelNameEmptyString()
+    {
+        $this->targets->del('');
+    }
+
+    /**
+     * Test del of absent target.
+     *
+     * @expectedException \Exception
+     * @expectedExceptionMessage not present on mapping
+     */
+    public function testDelAbsentTarget()
+    {
+        $this->targets->del('test');
+    }
+
+    /**************************************************************************
+     * Test internal data structures when deleting.
+     *************************************************************************/
+
+    /**
+     * Test targets positions internal data structure.
+     */
+    public function testDelTargetsPositions()
+    {
+        // add targets
+        $targets = array(
+            'test1' => 3,
+            'test2' => 2,
+            'test3' => 4,
+            'test4' => 5
+        );
+        $this->targets->addMulti($targets);
+
+        // get targetsPositions
+        $reflect = new \ReflectionClass($this->targets);
+        $targetsPositionsProp = $reflect->getProperty('targetsPositions');
+        $targetsPositionsProp->setAccessible(true);
+        $targetsPositions = $targetsPositionsProp->getValue($this->targets);
+
+        // assert that the two targets are there
+        $this->assertCount(count($targets), $targetsPositions);
+
+        foreach ($targetsPositions as $name => $positions) {
+            $this->assertTrue(isset($targets[$name]));
+            $this->assertCount(
+                $targets[$name] * $this->targets->getNumberReplicas(),
+                $positions
+            );
+        }
+
+        // delete
+        $this->targets->delMulti(array('test1', 'test3'));
+        $newTargets = array(
+            'test2' => 2,
+            'test4' => 5
+        );
+
+        // get targetsPositions
+        $newTargetsPositions = $targetsPositionsProp->getValue($this->targets);
+
+        // assert that the two targets are there
+        $this->assertCount(count($newTargets), $newTargetsPositions);
+
+        foreach ($newTargetsPositions as $name => $positions) {
+            $this->assertTrue(isset($newTargets[$name]));
+            $this->assertCount(
+                $newTargets[$name] * $this->targets->getNumberReplicas(),
+                $positions
+            );
+        }
+    }
+
+    /**
+     * Simple test of del just taking in consideration the count.
+     */
+    public function testDelCount()
+    {
+        $targets = array(
+            'test1' => 1,
+            'test2' => 3,
+            'test3' => 2,
+        );
+
+        $this->targets->addMulti($targets);
+
+        // test count
+        $reflect = new \ReflectionClass($this->targets);
+        $targetCountProp = $reflect->getProperty('targetCount');
+        $targetCountProp->setAccessible(true);
+        $this->assertEquals(count($targets), $targetCountProp->getValue($this->targets));
+
+        $this->targets->del('test1');
+
+        // test count
+        $this->assertEquals(count($targets) - 1, $targetCountProp->getValue($this->targets));
+    }
+
+    /**************************************************************************
+     * Test delete multi targets.
+     *************************************************************************/
+
+    /**
+     * Simple test of multi delete just taking in consideration the count.
+     */
+    public function testDelMultiCount()
+    {
+        $targets = array(
+            'test1' => 1,
+            'test2' => 3,
+            'test3' => 2,
+        );
+
+        $this->targets->addMulti($targets);
+
+        // test count
+        $reflect = new \ReflectionClass($this->targets);
+        $targetCountProp = $reflect->getProperty('targetCount');
+        $targetCountProp->setAccessible(true);
+        $this->assertEquals(count($targets), $targetCountProp->getValue($this->targets));
+
+        $this->targets->delMulti(array('test1', 'test3'));
+
+        // test count
+        $this->assertEquals(count($targets) - 2, $targetCountProp->getValue($this->targets));
+    }
 }

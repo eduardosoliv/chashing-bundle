@@ -71,6 +71,10 @@ class Targets
      */
     private $targetCount = 0;
 
+    /**************************************************************************
+     * Constructor.
+     *************************************************************************/
+
     /**
      * Constructor.
      *
@@ -93,25 +97,9 @@ class Targets
         }
     }
 
-    /**
-     * Number of replicas.
-     *
-     * @return integer
-     */
-    public function getNumberReplicas()
-    {
-        return $this->replicas;
-    }
-
-    /**
-     * Return hasher.
-     *
-     * @return \ESO\CHashingBundle\ESO\CHashingBundle\Hasher\HasherInterface
-     */
-    public function getHasher()
-    {
-        return $this->hasher;
-    }
+    /**************************************************************************
+     * Add/del/has targets.
+     *************************************************************************/
 
     /**
      * Add target.
@@ -120,7 +108,7 @@ class Targets
      * @param integer $weight Weight.
      *
      * @throws \InvalidArgumentException Arguments invalid.
-     * @throws \Exception Already present on mapping.
+     * @throws \Exception                Already present on mapping.
      */
     public function add($name, $weight = 1)
     {
@@ -169,9 +157,43 @@ class Targets
         }
     }
 
+    /**
+     * Delete target.
+     *
+     * @param string $name
+     *
+     * @throws \InvalidArgumentException
+     * @throws \Exception
+     */
     public function del($name)
     {
-        
+        // validations
+        if (!$this->validateName($name)) {
+            throw new \InvalidArgumentException('Invalid target name.');
+        }
+        if (!$this->has($name)) {
+            throw new \Exception("Target '$name' not present on mapping.");
+        }
+
+        foreach ($this->targetsPositions[$name] as $position) {
+            unset($this->positionsTargets[$position]);
+        }
+
+        unset($this->targetsPositions[$name]);
+
+        --$this->targetCount;
+    }
+
+    /**
+     * Delete multiple targets.
+     *
+     * @param array $targets Targets as array('targetName1', 'targetName2', ...)
+     */
+    public function delMulti(array $targets)
+    {
+        foreach ($targets as $name) {
+            $this->del($name);
+        }
     }
 
     /**
@@ -193,6 +215,66 @@ class Targets
         return isset($this->targetsPositions[$name]);
     }
 
+    /**************************************************************************
+     * Other methods.
+     *************************************************************************/
+
+    /**
+     * Get positions to targets mapping.
+     *
+     * @return array
+     */
+    public function &getPositionsTargets()
+    {
+        return $this->positionsTargets;
+    }
+
+    /**
+     * Number of replicas.
+     *
+     * @return integer
+     */
+    public function getNumberReplicas()
+    {
+        return $this->replicas;
+    }
+
+    /**
+     * Return hasher.
+     *
+     * @return \ESO\CHashingBundle\ESO\CHashingBundle\Hasher\HasherInterface
+     */
+    public function getHasher()
+    {
+        return $this->hasher;
+    }
+
+    /**
+     * Sort position targets.
+     */
+    public function sortPositionTargets()
+    {
+        // check if sorted
+        if (!$this->positionsTargetsSorted) {
+            ksort($this->positionsTargets, SORT_REGULAR);
+            $this->positionsTargetsSorted = true;
+        }
+    }
+
+    /**
+     * Returns targets count.
+     *
+     * @return integer
+     */
+    public function getTargetsCount()
+    {
+        return $this->targetCount;
+    }
+
+    /**************************************************************************
+     * Validations
+     *************************************************************************/
+
     /**
      * Validate name of target.
      *
@@ -200,7 +282,8 @@ class Targets
      *
      * @return boolean True if name is valid.
      */
-    private function validateName($name) {
+    private function validateName($name)
+    {
         return (is_string($name) && $name != '');
     }
 
@@ -211,7 +294,8 @@ class Targets
      *
      * @return boolean True if weight is valid.
      */
-    private function validateWeight($weight) {
+    private function validateWeight($weight)
+    {
         return (is_int($weight) && $weight >= 1);
     }
 }
