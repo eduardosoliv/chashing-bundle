@@ -4,7 +4,7 @@ Consistent hashing Symfony 2 bundle
 What does this bundle do?
 ------------
 
-Simple Symfony 2 bundle that implements consistent hashing, one of the most know use case is in distributed caching, but can be used in other cases like shard data across multiple serve.
+Simple Symfony 2 bundle that implements consistent hashing, one of the most know use case is in distributed caching, but can be used in other cases like shard data across multiple databases/servers.
 
 The base of this bundle is Flexihash code (https://github.com/pda/flexihash/).
 
