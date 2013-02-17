@@ -17,7 +17,9 @@ use ESO\CHashingBundle\Hasher;
 /**
  * CHash tests.
  *
- * @author  Eduardo Oliveira <entering@gmail.com>
+ * @author Eduardo Oliveira <entering@gmail.com>
+ *
+ * @SuppressWarnings(PHPMD.TooManyMethods)
  */
 class CHashTest extends \PHPUnit_Framework_TestCase
 {
@@ -50,7 +52,7 @@ class CHashTest extends \PHPUnit_Framework_TestCase
      * Test constructor with replicas as array (instead of a positive integer).
      *
      * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Number of replicas needs to be a positive integer
+     * @expectedExceptionMessage replicas needs to be a positive integer
      */
     public function testConstructorReplicasAsArray()
     {
@@ -64,7 +66,7 @@ class CHashTest extends \PHPUnit_Framework_TestCase
      * Test constructor with replicas as negative integer.
      *
      * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Number of replicas needs to be a positive integer
+     * @expectedExceptionMessage replicas needs to be a positive integer
      */
     public function testConstructorReplicasNegativeInteger()
     {
@@ -78,7 +80,7 @@ class CHashTest extends \PHPUnit_Framework_TestCase
      * Test constructor with replicas as float.
      *
      * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Number of replicas needs to be a positive integer
+     * @expectedExceptionMessage replicas needs to be a positive integer
      */
     public function testConstructorReplicasFloat()
     {
@@ -148,36 +150,10 @@ class CHashTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($targetsNames, $resTargets);
     }
 
-//    public function testLookup()
-//    {
-//        $this->chash->targets()->addMulti(
-//            array(
-//                'test1' => 1,
-//                'test2' => 1,
-//                'test3' => 10,
-//                'test4  ' => 1,
-//                'test5' => 1,
-//                'test6' => 1,
-//                'test7' => 1,
-//            )
-//        );
-//
-//        $targetsDist = array();
-//
-//        for ($i = 1; $i <= 1000; ++$i) {
-//            $targets = $this->chash->lookup($this->generateRandomString(), 1);
-//
-//            foreach ($targets as $target) {
-//                (!isset($targetsDist[$target])) ?
-//                    $targetsDist[$target] = 1 :
-//                    ++$targetsDist[$target];
-//            }
-//        }
-//
-//        print_r($targetsDist);
-//    }
-
-    protected function generateRandomString($length = 20, $chars = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ')
+    protected function generateRandomString(
+        $length = 20,
+        $chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    )
     {
         return substr(str_shuffle($chars), 0, $length);
     }

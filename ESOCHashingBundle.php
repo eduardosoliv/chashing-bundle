@@ -16,7 +16,7 @@ use Symfony\Component\HttpKernel\Bundle\Bundle;
 /**
  * ESOCHashingBundle.
  *
- * @author  Eduardo Oliveira <entering@gmail.com>
+ * @author Eduardo Oliveira <entering@gmail.com>
  */
 class ESOCHashingBundle extends Bundle
 {

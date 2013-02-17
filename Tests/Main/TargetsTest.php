@@ -17,7 +17,7 @@ use ESO\CHashingBundle\Hasher;
 /**
  * Targets tests.
  *
- * @author  Eduardo Oliveira <entering@gmail.com>
+ * @author Eduardo Oliveira <entering@gmail.com>
  *
  * @SuppressWarnings(PHPMD.TooManyMethods)
  */
@@ -50,7 +50,7 @@ class TargetsTest extends \PHPUnit_Framework_TestCase
      * Test constructor with replicas as array (instead of a positive integer).
      *
      * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Number of replicas needs to be a positive integer
+     * @expectedExceptionMessage replicas needs to be a positive integer
      */
     public function testConstructorReplicasAsArray()
     {
@@ -64,7 +64,7 @@ class TargetsTest extends \PHPUnit_Framework_TestCase
      * Test constructor with replicas as negative integer.
      *
      * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Number of replicas needs to be a positive integer
+     * @expectedExceptionMessage replicas needs to be a positive integer
      */
     public function testConstructorReplicasNegativeInteger()
     {
@@ -78,7 +78,7 @@ class TargetsTest extends \PHPUnit_Framework_TestCase
      * Test constructor with replicas as float.
      *
      * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage Number of replicas needs to be a positive integer
+     * @expectedExceptionMessage replicas needs to be a positive integer
      */
     public function testConstructorReplicasFloat()
     {
@@ -199,7 +199,7 @@ class TargetsTest extends \PHPUnit_Framework_TestCase
             'test1' => 3,
             'test2' => 2
         );
-        foreach ($targets  as $name => $weight) {
+        foreach ($targets as $name => $weight) {
              $this->targets->add($name, $weight);
         }
 
@@ -232,19 +232,26 @@ class TargetsTest extends \PHPUnit_Framework_TestCase
             'test2' => 2
         );
         $totalPositions = 0;
-        foreach ($targets  as $name => $weight) {
+        foreach ($targets as $name => $weight) {
              $this->targets->add($name, $weight);
              $totalPositions += $this->targets->getNumberReplicas() * $weight;
         }
-        
+
         // assert that all the positions are there
-        $this->assertCount($totalPositions, $this->targets->getPositionsTargets());
+        $this->assertCount(
+            $totalPositions, $this->targets->getPositionsTargets()
+        );
 
         // assert total of positions of each target
-        $targetsPositionsTotal = array_count_values($this->targets->getPositionsTargets());
+        $targetsPositionsTotal =
+            array_count_values($this->targets->getPositionsTargets());
+
         foreach ($targetsPositionsTotal as $name => $numberPositions) {
             $this->assertTrue(isset($targets[$name]));
-            $this->assertEquals($targets[$name] * $this->targets->getNumberReplicas(), $numberPositions);
+            $this->assertEquals(
+                $targets[$name] * $this->targets->getNumberReplicas(),
+                $numberPositions
+            );
         }
     }
 
@@ -261,9 +268,9 @@ class TargetsTest extends \PHPUnit_Framework_TestCase
 
         // test sorted
         $reflect = new \ReflectionClass($this->targets);
-        $positionsTargetsSortedProp = $reflect->getProperty('positionsTargetsSorted');
-        $positionsTargetsSortedProp->setAccessible(true);
-        $this->assertFalse($positionsTargetsSortedProp->getValue($this->targets));
+        $posTargetsSortedProp = $reflect->getProperty('positionsTargetsSorted');
+        $posTargetsSortedProp->setAccessible(true);
+        $this->assertFalse($posTargetsSortedProp->getValue($this->targets));
     }
 
     /**************************************************************************
@@ -287,7 +294,10 @@ class TargetsTest extends \PHPUnit_Framework_TestCase
         $reflect = new \ReflectionClass($this->targets);
         $targetCountProp = $reflect->getProperty('targetCount');
         $targetCountProp->setAccessible(true);
-        $this->assertEquals(count($targets), $targetCountProp->getValue($this->targets));
+
+        $this->assertEquals(
+            count($targets), $targetCountProp->getValue($this->targets)
+        );
     }
 
     /**************************************************************************
@@ -401,12 +411,16 @@ class TargetsTest extends \PHPUnit_Framework_TestCase
         $reflect = new \ReflectionClass($this->targets);
         $targetCountProp = $reflect->getProperty('targetCount');
         $targetCountProp->setAccessible(true);
-        $this->assertEquals(count($targets), $targetCountProp->getValue($this->targets));
+        $this->assertEquals(
+            count($targets), $targetCountProp->getValue($this->targets)
+        );
 
         $this->targets->del('test1');
 
         // test count
-        $this->assertEquals(count($targets) - 1, $targetCountProp->getValue($this->targets));
+        $this->assertEquals(
+            count($targets) - 1, $targetCountProp->getValue($this->targets)
+        );
     }
 
     /**************************************************************************
@@ -430,11 +444,15 @@ class TargetsTest extends \PHPUnit_Framework_TestCase
         $reflect = new \ReflectionClass($this->targets);
         $targetCountProp = $reflect->getProperty('targetCount');
         $targetCountProp->setAccessible(true);
-        $this->assertEquals(count($targets), $targetCountProp->getValue($this->targets));
+        $this->assertEquals(
+            count($targets), $targetCountProp->getValue($this->targets)
+        );
 
         $this->targets->delMulti(array('test1', 'test3'));
 
         // test count
-        $this->assertEquals(count($targets) - 2, $targetCountProp->getValue($this->targets));
+        $this->assertEquals(
+            count($targets) - 2, $targetCountProp->getValue($this->targets)
+        );
     }
 }

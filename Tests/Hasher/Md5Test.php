@@ -16,7 +16,7 @@ use ESO\CHashingBundle\Hasher\Md5;
 /**
  * Md5 tests.
  *
- * @author  Eduardo Oliveira <entering@gmail.com>
+ * @author Eduardo Oliveira <entering@gmail.com>
  */
 class Md5Test extends \PHPUnit_Framework_TestCase
 {
@@ -27,7 +27,7 @@ class Md5Test extends \PHPUnit_Framework_TestCase
      */
     public function testHashInputAsArray()
     {
-    (new Md5())->hash(array('array'));
+        (new Md5())->hash(array('array'));
     }
 
     /**
@@ -35,7 +35,7 @@ class Md5Test extends \PHPUnit_Framework_TestCase
      */
     public function testHash()
     {
-    $this->assertEquals(
+        $this->assertEquals(
             '098f6bcd',
             (new Md5())->hash('test')
         );

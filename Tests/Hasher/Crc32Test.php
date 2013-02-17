@@ -16,7 +16,7 @@ use ESO\CHashingBundle\Hasher\Crc32;
 /**
  * Crc32 tests.
  *
- * @author  Eduardo Oliveira <entering@gmail.com>
+ * @author Eduardo Oliveira <entering@gmail.com>
  */
 class Crc32Test extends \PHPUnit_Framework_TestCase
 {
@@ -27,7 +27,7 @@ class Crc32Test extends \PHPUnit_Framework_TestCase
      */
     public function testHashInputAsArray()
     {
-    (new Crc32())->hash(array('array'));
+        (new Crc32())->hash(array('array'));
     }
 
     /**
@@ -35,7 +35,7 @@ class Crc32Test extends \PHPUnit_Framework_TestCase
      */
     public function testHash()
     {
-    $this->assertEquals(
+        $this->assertEquals(
             '3632233996',
             (new Crc32())->hash('test')
         );

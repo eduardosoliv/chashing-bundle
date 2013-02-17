@@ -16,7 +16,7 @@ use ESO\CHashingBundle\Hasher\HasherInterface;
 /**
  * Crc32 hasher.
  *
- * @author  Eduardo Oliveira <entering@gmail.com>
+ * @author Eduardo Oliveira <entering@gmail.com>
  */
 class Crc32 implements HasherInterface
 {
@@ -26,7 +26,9 @@ class Crc32 implements HasherInterface
     public function hash($str)
     {
         if (!is_string($str)) {
-            throw new \InvalidArgumentException('Cannot hash input not string.');
+            throw new \InvalidArgumentException(
+                'Cannot hash input not string.'
+            );
         }
 
         return crc32($str);
