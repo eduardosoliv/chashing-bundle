@@ -9,7 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace ESO\CHashingBundle;
+namespace ESO\CHashingBundle\Main;
+
+use ESO\CHashingBundle\Main\Targets;
 
 /**
  * CHasher.
@@ -18,7 +20,12 @@ namespace ESO\CHashingBundle;
  */
 class CHash
 {
-    private $replicas = 64;
+    /**
+     * Targets.
+     *
+     * @var \ESO\CHashingBundle\Main\Targets
+     */
+    private $targets;
 
     /**
      * Constructor.
@@ -30,15 +37,17 @@ class CHash
      */
     public function __construct(\ESO\CHashingBundle\Hasher\HasherInterface $hasher, $replicas = null)
     {
-        // validations
-        if ($replicas !== null && (!is_int($replicas) || $replicas < 1)) {
-            throw new \InvalidArgumentException('Number of replicas needs to be a positive integer.');
-        }
-
-        // assign
-        $this->hasher = $hasher;
-        if ($replicas !== null) {
-            $this->replicas = $replicas;
-        }
+        $this->targets = new Targets($hasher, $replicas);
     }
+
+    /**
+     * Return targets.
+     *
+     * @return \ESO\CHashingBundle\Main\Targets
+     */
+    public function targets()
+    {
+        return $this->targets();
+    }
+
 }
