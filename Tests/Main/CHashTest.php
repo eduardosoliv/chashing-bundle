@@ -128,6 +128,17 @@ class CHashTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test lookup with targets count as negative integer.
+     *
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage Targets count needs to be a positive integer
+     */
+    public function testLookupTargetsCountAsNegativeInteger()
+    {
+        $this->chash->lookup('test', -10);
+    }
+
+    /**
      * Test lookup more targets than exists.
      */
     public function testLookupMoreTargetsThanExists()
@@ -142,12 +153,82 @@ class CHashTest extends \PHPUnit_Framework_TestCase
 
         $resTargets = $this->chash->lookup('test', 5);
 
+        $this->assertInternalType('array', $resTargets);
+
         $targetsNames = array_keys($targets);
         sort($targetsNames);
         sort($resTargets);
 
         $this->assertCount(count($targetsNames), $resTargets);
         $this->assertEquals($targetsNames, $resTargets);
+    }
+
+    /**
+     * Test lookup.
+     */
+    public function testLookup()
+    {
+        $targets = array(
+            'test1' => 1,
+            'test2' => 1,
+            'test3' => 1
+        );
+        $targetsCount = count($targets);
+        $this->chash->targets()->addMulti($targets);
+
+        for ($count = 1; $count <= $targetsCount; ++$count) {
+            $resTargets = $this->chash->lookup('test', $count);
+            $this->assertInternalType('array', $resTargets);
+            $this->assertCount($count, $resTargets);
+
+            // ensure uniqueness
+            $this->assertEquals($resTargets, array_unique($resTargets));
+
+            // assert all targets returned "exists"
+            foreach ($resTargets as $target) {
+                $this->assertTrue(isset($targets[$target]));
+            }
+        }
+    }
+
+    /**
+     * Test with a target with much bigger weight.
+     *
+     * @group fuzzing
+     */
+    public function testProbability()
+    {
+        $targets = array(
+            'test1' => 2,
+            'test2' => 30, // weight much bigger
+            'test3' => 2,
+            'test4' => 2,
+            'test5' => 2,
+            'test6' => 2
+        );
+
+        $this->chash->targets()->addMulti($targets);
+
+        // initialize array to hold counts
+        $targetsCount = $targets;
+        foreach ($targetsCount as $targetName => $count) {
+            $targetsCount[$targetName] = 0;
+        }
+
+        for ($i = 1; $i <= 5000; ++$i) {
+            $resTargets = $this->chash->lookup(
+                $this->generateRandomString(), 1
+            );
+            foreach ($resTargets as $target) {
+                ++$targetsCount[$target];
+            }
+        }
+
+        $this->assertTrue(
+            $targetsCount['test2'] > ($targetsCount['test1'] +
+            $targetsCount['test3'] + $targetsCount['test4'] +
+            $targetsCount['test5'] + $targetsCount['test6'])
+        );
     }
 
     protected function generateRandomString(
