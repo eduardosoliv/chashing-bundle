@@ -25,7 +25,7 @@ services:
 /* @var $chash \ESO\CHashingBundle\Main\CHash */
 $chash = $this->getContainer()->get('chashing');
 
-// simple lookup
+// simple targets
 echo "\nTargets:\n";
 print_r($chash->targets()->getTargets());
 
