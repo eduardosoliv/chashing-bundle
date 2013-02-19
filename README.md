@@ -27,47 +27,18 @@ There are some improves/changes to Flexihash:
 * Break the main class in two, one main class and one holding data and methods related to tagerts;
 * 100% code coverage;
 
-Requirements
+Documentation
 ------------
-
-* PHP >= 5.4.7
-* PHPUnit 3.7.* (just for development)
 
 Installation
 ------------
 
-Add the following line to your composer.json file.
-
-```js
-//composer.json
-{
-    //...
-    "require": {
-        //...
-        "eso/chashing-bundle": "dev-master"
-    }
-    //...
-}
-```
-
-If you haven't allready done so, get Composer:
-
-```bash
-curl -s http://getcomposer.org/installer | php
-```
-
-And install the new bundle
-
-```bash
-php composer.phar update eso/chashing-bundle
-```
-
-Add to your AppKernel.php
-
-```
-new ESO\CHashingBundle\ESOCHashingBundle()
-```
-
-How to use
+License
 ------------
+
+This bundle is under the MIT license. See the complete license in:
+
+```
+Resources/meta/LICENSE
+```
 
