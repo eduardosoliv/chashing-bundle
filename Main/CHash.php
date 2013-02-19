@@ -36,13 +36,20 @@ class CHash
      * Constructor.
      *
      * @param HasherInterface $hasher   Hasher algorithm.
+     * @param array           $targets  Targets.
      * @param integer         $replicas Number of positions to hash each target.
      *
-     * @throws \InvalidArgumentException
+     * @see Targets::__construct
+     * @see Targets::addMulti
+     * @see Targets::add
      */
-    public function __construct(HasherInterface $hasher, $replicas = null)
+    public function __construct(HasherInterface $hasher, array $targets = array(), $replicas = null)
     {
         $this->targets = new Targets($hasher, $replicas);
+
+        if ($targets != array()) {
+            $this->targets()->addMulti($targets);
+        }
     }
 
     /**************************************************************************

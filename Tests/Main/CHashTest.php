@@ -58,6 +58,7 @@ class CHashTest extends \PHPUnit_Framework_TestCase
     {
         new CHash(
             new Hasher\Crc32(),
+            array(),
             array('test')
         );
     }
@@ -72,6 +73,7 @@ class CHashTest extends \PHPUnit_Framework_TestCase
     {
         new CHash(
             new Hasher\Crc32(),
+            array(),
             -10
         );
     }
@@ -86,8 +88,28 @@ class CHashTest extends \PHPUnit_Framework_TestCase
     {
         new CHash(
             new Hasher\Crc32(),
+            array(),
             10.5
         );
+    }
+
+    /**
+     * Test constructor with targets.
+     */
+    public function testConstructorWithTargets()
+    {
+        $targets = array(
+            'test1' => 3,
+            'test2' => 2,
+            'test3' => 1
+        );
+
+        $chash = new CHash(
+            new Hasher\Crc32(),
+            $targets
+        );
+
+        $this->assertEquals(array_keys($targets), $chash->targets()->getTargets());
     }
 
     /**************************************************************************

@@ -280,6 +280,16 @@ class Targets
         return $this->targetCount;
     }
 
+    /**
+     * Get targets.
+     * 
+     * @return array
+     */
+    public function getTargets()
+    {
+        return array_keys($this->targetsPositions);
+    }
+
     /**************************************************************************
      * Validations
      *************************************************************************/
