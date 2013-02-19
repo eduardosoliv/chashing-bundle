@@ -30,8 +30,12 @@ There are some improves/changes to Flexihash:
 Documentation
 ------------
 
+[Index](https://github.com/entering/chashing-bundle/blob/master/Resources/doc/index.rst)
+
 Installation
 ------------
+
+Installation instructions are located in [documentation](https://github.com/entering/chashing-bundle/blob/master/Resources/doc/installation.md).
 
 License
 ------------
@@ -41,4 +45,3 @@ This bundle is under the MIT license. See the complete license in:
 ```
 Resources/meta/LICENSE
 ```
-
