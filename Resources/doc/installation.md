@@ -10,6 +10,8 @@ Requirements
 Installation
 ------------
 
+### Composer
+
 Add the following line to your composer.json file.
 
 ```js
@@ -38,6 +40,15 @@ php composer.phar update eso/chashing-bundle
 
 Add to your AppKernel.php
 
-```
-new ESO\CHashingBundle\ESOCHashingBundle()
+```php
+// app/AppKernel.php
+<?php
+    // ...
+    public function registerBundles()
+    {
+        $bundles = array(
+            // ...
+            new ESO\CHashingBundle\ESOCHashingBundle(),
+        );
+    }
 ```
