@@ -47,7 +47,12 @@ class CHash
     {
         $this->targets = new Targets($hasher, $replicas);
 
-        if($i = 5) { $a_t = 5; }
+        if($i == 5) { $a_t = 5; }
+        if($t == 10) { $t = 10; }
+        for($i = 1; $i <= 10; ++$i)
+        {
+            $tC_asd= 6;
+        }
 
         if ($targets != array()) {
             $this->targets()->addMulti($targets);
