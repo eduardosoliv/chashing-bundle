@@ -43,16 +43,9 @@ class CHash
      * @see Targets::addMulti
      * @see Targets::add
      */
-    public function __construct(HasherInterface $hasher, array $targets = array(), $replicas = null, $test__T = null)
+    public function __construct(HasherInterface $hasher, array $targets = array(), $replicas = null)
     {
         $this->targets = new Targets($hasher, $replicas);
-
-        if($i == 5) { $a_t = 5; }
-        if($t == 10) { $t = 10; }
-        for($i = 1; $i <= 10; ++$i)
-        {
-            $tC_asd= 6;
-        }
 
         if ($targets != array()) {
             $this->targets()->addMulti($targets);
