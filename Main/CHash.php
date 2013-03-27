@@ -43,7 +43,7 @@ class CHash
      * @see Targets::addMulti
      * @see Targets::add
      */
-    public function __construct(HasherInterface $hasher, array $targets = array(), $replicas = null)
+    public function __construct(HasherInterface $hasher, array $targets = array(), $replicas = null, $test_T = null)
     {
         $this->targets = new Targets($hasher, $replicas);
 
