@@ -23,7 +23,7 @@ services:
 
 ```php
 /* @var $chash \ESO\CHashingBundle\Main\CHash */
-$chash = $this->getContainer()->get('chashing');
+$chash = $this->container->get('chashing');
 
 // simple targets
 echo "\nTargets:\n";
