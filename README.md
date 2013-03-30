@@ -30,7 +30,7 @@ There are some improves/changes to Flexihash:
 Documentation
 ------------
 
-[Index](https://github.com/entering/chashing-bundle/blob/master/Resources/doc/index.rst)
+[Index](https://github.com/entering/chashing-bundle/blob/master/Resources/doc/index.md)
 
 Installation
 ------------
