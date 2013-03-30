@@ -171,5 +171,4 @@ class CHash
     {
         return (is_int($targetsCount) && $targetsCount >= 1);
     }
-
 }

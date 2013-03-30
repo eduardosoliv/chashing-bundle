@@ -239,7 +239,8 @@ class CHashTest extends \PHPUnit_Framework_TestCase
 
         for ($i = 1; $i <= 5000; ++$i) {
             $resTargets = $this->chash->lookup(
-                $this->generateRandomString(), 1
+                $this->generateRandomString(),
+                1
             );
             foreach ($resTargets as $target) {
                 ++$targetsCount[$target];
@@ -256,8 +257,7 @@ class CHashTest extends \PHPUnit_Framework_TestCase
     protected function generateRandomString(
         $length = 20,
         $chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'
-    )
-    {
+    ) {
         return substr(str_shuffle($chars), 0, $length);
     }
 }

@@ -239,7 +239,8 @@ class TargetsTest extends \PHPUnit_Framework_TestCase
 
         // assert that all the positions are there
         $this->assertCount(
-            $totalPositions, $this->targets->getPositionsTargets()
+            $totalPositions,
+            $this->targets->getPositionsTargets()
         );
 
         // assert total of positions of each target
@@ -296,7 +297,8 @@ class TargetsTest extends \PHPUnit_Framework_TestCase
         $targetCountProp->setAccessible(true);
 
         $this->assertEquals(
-            count($targets), $targetCountProp->getValue($this->targets)
+            count($targets),
+            $targetCountProp->getValue($this->targets)
         );
     }
 
@@ -412,14 +414,16 @@ class TargetsTest extends \PHPUnit_Framework_TestCase
         $targetCountProp = $reflect->getProperty('targetCount');
         $targetCountProp->setAccessible(true);
         $this->assertEquals(
-            count($targets), $targetCountProp->getValue($this->targets)
+            count($targets),
+            $targetCountProp->getValue($this->targets)
         );
 
         $this->targets->del('test1');
 
         // test count
         $this->assertEquals(
-            count($targets) - 1, $targetCountProp->getValue($this->targets)
+            count($targets) - 1,
+            $targetCountProp->getValue($this->targets)
         );
     }
 
@@ -445,14 +449,16 @@ class TargetsTest extends \PHPUnit_Framework_TestCase
         $targetCountProp = $reflect->getProperty('targetCount');
         $targetCountProp->setAccessible(true);
         $this->assertEquals(
-            count($targets), $targetCountProp->getValue($this->targets)
+            count($targets),
+            $targetCountProp->getValue($this->targets)
         );
 
         $this->targets->delMulti(array('test1', 'test3'));
 
         // test count
         $this->assertEquals(
-            count($targets) - 2, $targetCountProp->getValue($this->targets)
+            count($targets) - 2,
+            $targetCountProp->getValue($this->targets)
         );
     }
 }
