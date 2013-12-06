@@ -11,7 +11,7 @@ If you want to contribute:
 * clone;
 * install composer;
 * php composer.phar install --dev;
-* make your changes and run the tests: phpunit
+* make your changes and run the tests: bin/phpunit
 * commit and push
 * pull request (https://help.github.com/articles/using-pull-requests)
 

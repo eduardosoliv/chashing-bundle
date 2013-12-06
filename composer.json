@@ -15,9 +15,15 @@
     "require": {
         "php": ">=5.4.0"
     },
+    "require-dev": {
+        "phpunit/phpunit": "~3.7.24"
+    },
     "autoload": {
         "psr-0": { "ESO\\CHashingBundle": "" }
     },
     "minimum-stability": "dev",
-    "target-dir": "ESO/CHashingBundle"
+    "target-dir": "ESO/CHashingBundle",
+    "config": {
+        "bin-dir": "bin/"
+    }
 }
