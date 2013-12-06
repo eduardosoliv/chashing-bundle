@@ -1,7 +1,7 @@
 Consistent hashing Symfony 2 bundle
 =============================
 
-[![Latest Stable Version](https://poser.pugx.org/eso/chashing-bundle/v/stable.png)](https://packagist.org/packages/eso/chashing-bundle) [![Build Status](https://api.travis-ci.org/entering/chashing-bundle.png?branch=master)](https://travis-ci.org/entering/chashing-bundle)
+[![Latest Stable Version](https://poser.pugx.org/eso/chashing-bundle/v/stable.png)](https://packagist.org/packages/eso/chashing-bundle) [![Build Status](https://api.travis-ci.org/entering/chashing-bundle.png?branch=master)](https://travis-ci.org/entering/chashing-bundle) [![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/entering/chashing-bundle/badges/quality-score.png?s=0cda11526319371e090f2650570c13f361a95c52)](https://scrutinizer-ci.com/g/entering/chashing-bundle/)
 
 What does this bundle do?
 ------------
