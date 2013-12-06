@@ -1,8 +1,8 @@
 /phpunit.xml
 *~
 composer.lock
-/vendor/
+/vendor
 composer.phar
-/nbproject/
-/bin/phpunit
+/nbproject
+/bin
 .idea
