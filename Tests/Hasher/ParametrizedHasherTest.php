@@ -42,6 +42,17 @@ class ParametrizedHasherTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * Test hash with algorithm md5.
+     */
+    public function testHashMd5()
+    {
+        $this->assertEquals(
+            md5('test'),
+            (new ParametrizedHasher('md5'))->hash('test')
+        );
+    }
+
+    /**
      * Test hasher constructor throws exception when an unknown algorithm is received.
      * 
      * @expectedException \InvalidArgumentException
@@ -57,7 +68,7 @@ class ParametrizedHasherTest extends \PHPUnit_Framework_TestCase
      */
     public function testHasherWithKnownAlgorithm()
     {
-        foreach(hash_algos() as $algorithm){
+        foreach (hash_algos() as $algorithm) {
             $this->assertNotNull(new ParametrizedHasher($algorithm));
         }
     }

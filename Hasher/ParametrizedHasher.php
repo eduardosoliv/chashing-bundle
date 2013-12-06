@@ -20,14 +20,16 @@ use ESO\CHashingBundle\Hasher\HasherInterface;
  */
 class ParametrizedHasher implements HasherInterface
 {
-
     const DEFAULT_ALGORITHM = 'sha256';
 
     /**
-     * @var String
+     * @var string
      */
     private $algorithm;
 
+    /**
+     * @param string $algorithm
+     */
     public function __construct($algorithm = self::DEFAULT_ALGORITHM)
     {
         $this->validateAlgorithm($algorithm);
@@ -36,15 +38,17 @@ class ParametrizedHasher implements HasherInterface
 
     /**
      * Check if the received algorithm is available in the system
-     * @param String $algorithm
+     *
+     * @param string $algorithm
+     *
      * @throws \InvalidArgumentException
      */
-    private function validateAlgorithm($algorithm)
+    protected function validateAlgorithm($algorithm)
     {
-        $systemAlgrithms = hash_algos();
-        if (!in_array($algorithm, $systemAlgrithms)) {
+        $systemAlgorithms = hash_algos();
+        if (!in_array($algorithm, $systemAlgorithms)) {
             throw new \InvalidArgumentException(
-                    "The '$algorithm' algorithm is not available in this system."
+                sprintf('The "%s" algorithm is not available in this system.', $algorithm)
             );
         }
     }
@@ -56,7 +60,7 @@ class ParametrizedHasher implements HasherInterface
     {
         if (!is_string($str)) {
             throw new \InvalidArgumentException(
-                    'Cannot hash input not string.'
+                'Cannot hash input not string.'
             );
         }
 
