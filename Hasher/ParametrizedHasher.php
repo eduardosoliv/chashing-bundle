@@ -66,5 +66,4 @@ class ParametrizedHasher implements HasherInterface
 
         return hash($this->algorithm, $str, false);
     }
-
 }
