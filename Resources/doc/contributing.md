@@ -1,7 +1,7 @@
 Contributing
 =============================
 
-First of all, *thank you* for contributing.
+First of all, **thank you** for contributing.
 
 Bugs or feature requests can be posted online on the GitHub issues section of the project.
 
