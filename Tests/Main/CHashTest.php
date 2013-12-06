@@ -233,7 +233,7 @@ class CHashTest extends \PHPUnit_Framework_TestCase
 
         // initialize array to hold counts
         $targetsCount = $targets;
-        foreach ($targetsCount as $targetName => $count) {
+        foreach (array_keys($targetsCount) as $targetName) {
             $targetsCount[$targetName] = 0;
         }
 
