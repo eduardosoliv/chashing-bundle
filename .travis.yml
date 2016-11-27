@@ -15,5 +15,7 @@ before_script:
 
 script: bin/phpunit --coverage-text
 
-after_script:
+after_success:
   - bin/phpcs -v --report=summary --standard=PSR1,PSR2 Main/ Hasher/ Tests/
+  - if [ "$COVERALLS" = "yes" ]; then php composer.phar require --dev satooshi/php-coveralls dev-master && vendor/bin/coveralls -vvv; fi
+
