@@ -4,7 +4,7 @@ Installation
 Requirements
 ------------
 
-* PHP >= 5.4.7
+* PHP >= 5.4
 * PHPUnit 3.7.* (just for development)
 
 Installation
