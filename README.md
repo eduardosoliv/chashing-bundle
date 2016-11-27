@@ -3,6 +3,7 @@ Consistent hashing Symfony 2 bundle
 
 [![Latest Stable Version](https://poser.pugx.org/eso/chashing-bundle/v/stable.png)](https://packagist.org/packages/eso/chashing-bundle)
 [![Build Status](https://api.travis-ci.org/entering/chashing-bundle.png?branch=master)](https://travis-ci.org/entering/chashing-bundle)
+[![Coverage Status](https://coveralls.io/repos/github/entering/chashing-bundle/badge.svg?branch=master)](https://coveralls.io/github/entering/chashing-bundle?branch=master)
 
 What does this bundle do?
 ------------
